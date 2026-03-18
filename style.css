@@ -1,0 +1,459 @@
+html{
+    scroll-behavior: smooth;
+    
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    width: 100%;
+    overflow-x: hidden; 
+}
+
+/* Header & Nav */
+header {
+    display: flex;
+    height: 4.3rem;
+    background: #ff00ff;
+    position: fixed;
+    z-index: 100; 
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-family: 'Roboto', sans-serif;
+    margin-left: 1.5rem;
+    color: white;
+    font-size: 24px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem;
+}
+
+nav a {
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 550;
+    padding: 10px;
+    text-decoration: none;
+    transition: .3s ease;
+}
+
+nav a:hover {
+    background: #fcfbfbb5;
+    border-radius: 5px;
+    color: #413d41;
+}
+
+/* Home Section */
+#home {
+    position: relative;
+    background-color: #f7f2f2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 110vh; 
+    padding-top: 5rem; 
+}
+
+/* Profile Image Box with Animation */
+.imagebox {
+    position: relative;
+    width: 18rem;
+    height: 18rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #2b3c4498;
+    overflow: hidden;
+    top: -2.5rem;
+    margin-bottom: 2rem;
+    
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.imagebox::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0,
+        aqua 0deg 90deg,
+        transparent 90deg 180deg,
+        #ff00ff 180deg 270deg,
+        transparent 270deg 360deg
+    );
+    animation: spin 3s linear infinite;
+    filter: blur(10px);
+}
+
+.imagebox::after {
+    content: "";
+    position: absolute;
+    inset: 5px; 
+    background-color: #2b3c44; 
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.imagebox img {
+    width: 95%;
+    height: 95%;
+    object-fit: cover;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+/* Home Content */
+.content {
+    text-align: center;
+    padding: 0 1rem;
+    top: -5.3rem;
+    position: relative;
+}
+.content h4{
+    font-family: 'Roboto';
+}
+.content h1 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.content p {
+    font-family: 'Poppins', sans-serif;
+    max-width: 600px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+#btn1, #btn2 {
+    width: 10rem;
+    height: 3rem;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+#btn1 {
+    background: #ff00ff;
+    color: white;
+    border: none;
+}
+
+#btn1:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+}
+
+#btn2 {
+    background: transparent;
+    border: 1px solid black;
+}
+
+#btn2:hover {
+    background: #1a2e38;
+    color: white;
+}
+
+/* About Section */
+#about {
+    width: 100%;
+    background: #e4d6e4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0;
+}
+
+.den {
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+}
+
+#about h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+#about img {
+    border-radius: 12px;
+    height: 20rem;
+    width: 20rem;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: .3s ease;
+}
+#about img:hover{
+    box-shadow: 0px 5px 10px;
+    transform: translateX(-2px);
+}
+#about a{
+    position: relative;
+    font-family: sans-serif;
+    font-size: 16px;
+    transition: .3s ease;
+    left: -12rem;
+    text-decoration: none;
+}
+#about a:hover{
+    text-decoration: underline;
+}
+
+.story p {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+/*skills*/
+#skills {
+    width: 100%;
+    background: #cfc9cf;
+    min-height: 105vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0;
+}
+.container{
+    position: relative;
+    width: 90%;
+    height: 8rem;
+    top: -6rem;
+    padding: 27px;
+    gap: 0.5rem;
+    display: flex;
+    flex-direction:  column;
+    text-align: center;
+}
+.card{
+    position: relative;
+    top: -9em;
+    background: #ece7e7;
+    border-radius: 15px;
+    box-shadow: 1px 10px 20px #434141;
+    transition: .3s ease;
+}
+.card h1{
+    position: relative;
+    font-family: sans-serif;
+    top: -0rem;
+    font-size: 18px;  
+}
+.card:hover{
+    transform: translateY(-5px);
+}
+.card p,h3{
+    position: relative;
+    font-family: 'Roboto';
+    top: -0rem;
+}
+.container h2{
+    position: relative;
+    top: -9rem;
+    
+    font-family: 'Poppins',sans-serif;
+    text-align: center;
+}
+#contacts{
+    width: 100%;
+    background: #f0e9ef;
+    min-height: 105vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0;   
+}
+.links{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -8rem;
+}
+.links h2{
+    position: relative;
+    font-family: 'Roboto';
+    text-align: center;
+    top: 10rem;
+}
+.links img{
+    position: relative;
+    top: 10rem;
+    border-radius: 50%;
+    width: 16rem;
+    height: 16rem;
+    object-fit: cover;
+}
+.media {
+    display: flex;
+    position: relative;
+    top: 2.4rem;
+    gap: 1rem;
+    
+}
+.media img{
+    height: 2rem;
+    width: 2rem;
+}
+.box,textarea{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+   top: -22em;
+}
+.box input {
+    background: transparent;
+    border: none;
+    border-bottom: 1.2px solid black;
+    padding: 12px;
+    outline: none; 
+    font-size: 16px;
+    z-index: 2; 
+}
+
+.box label {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    color: #333;
+    pointer-events: none; 
+    transition: 0.3s ease;
+}
+
+
+.box input:focus + label,
+.box input:valid + label {
+    top: -15px; 
+    left: 0;
+    font-size: 14px;
+    color: #171717; 
+    font-weight: bold;
+    font-family: sans-serif;
+    
+}
+#send{
+    position: relative;
+    border-radius: 5px;
+    background: #ff00ff;
+    border: none;
+    height: 3rem;
+    top: -20rem;
+    font-size: 16px;
+    transition: .3 ease;
+
+}
+#send:hover{
+    transform: translateY(-5px);
+    box-shadow: 1px 10px 20px #827182;
+}
+#work{
+    width: 100%;
+    background: #f6f4f6;
+    min-height: 105vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0;   
+}
+
+#work .box{
+    display: flex;
+    text-align: center;  
+    gap: 1rem;
+    position: relative;
+    width: 90%;
+    top: -12rem;
+    height:12rem ;
+
+}
+.box h2{
+    position: relative;
+    font-family: 'Roboto';
+    top: -2rem;
+}
+.carrd h3{
+    position: relative;
+    top: -1rem;
+}
+.box .carrd{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius:16px;
+    box-shadow: 1px 20px 30px #9999;
+    transition: 0.3s ease;
+   
+}
+.carrd:hover{
+    transform: translateX(-5px);
+}
+
+footer{
+    background: #413d41;
+    height: 100vh;
+    
+   
+}
+footer nav{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 5.5rem;
+    align-items: center;
+   padding: 16px 20px;
+   
+}
+footer nav a:hover{
+    border-bottom: 1px solid #fff;
+}
+footer p{
+    position: relative;
+    color: #fff;
+    font-family: sans-serif;
+    top: 6rem;
+    text-align: center;
+    border-bottom: 1px solid rgb(255, 254, 254);
+}
+form{
+    position: relative;
+    top: 23rem;
+    text-align: center;
+}
+form input{
+    height: 2rem;
+    border-radius: 4px;
+    border: none;
+}
+form button{
+    height: 2rem;
+    border-radius: 5px;
+    border: none;
+    transition: 0.3s ease;
+}
+form button:hover{
+    background: rgb(225, 76, 22);
+}

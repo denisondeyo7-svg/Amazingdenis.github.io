@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifty</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        background: #0f1c22;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    .box{
+        position: relative;
+        height: 20rem;
+        top: 4em;
+       width: 20rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1a2e38;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    @keyframes spin{
+        from{transform: rotate(0deg);}
+        to{transform: rotate(360deg);}
+    }
+    .box::before{
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: conic-gradient(
+            from 0,
+            #ff00f0 0deg 85deg,
+            transparent 90deg 120deg,
+            rgba(26, 191, 241, 0.733) 120deg 180deg,
+            transparent 180deg 200deg,
+            rgb(236, 240, 32) 200deg 270deg,
+            transparent 270deg 300deg,
+            rgb(51, 219, 9)300deg 360deg
+        );
+        box-shadow: 0 0 20px rgba(255, 0, 240, 0.2), 0 0 40px rgba(10, 175, 175, 0.2);
+        filter: blur(10px);
+        animation: spin 6s linear infinite;
+    }
+    .box::after{
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        inset: 4px;
+        z-index: 1;
+        background: #1a2e38;
+    }
+    .box img{
+        z-index: 2;
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+    
+   
+</style>
+<div class="box">
+    <img src="images (10).png" alt="">
+</div>
+</body>
+</html>

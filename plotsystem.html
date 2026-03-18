@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceddah Students Home</title>
+<style>
+body{ font-family: sans-serif; background-color:#f1efef; margin:0; overflow-x: hidden; }
+
+/* HEADER */
+.header {
+    z-index: 3000; position: fixed; top:0; width:100%; height:105px ;
+    background: cornflowerblue; box-shadow: 2px 4px 5px rgba(0,0,0,0.2);
+    display:flex; align-items:center; justify-content:space-between; padding:0 20px; box-sizing:border-box;
+}
+.logo{ font-size:22px; font-weight:600; color:#fff; font-style:italic; font-family: Georgia, serif; }
+html{
+    scroll-behavior: smooth;
+}
+/* TOAST NOTIFICATION */
+#toast {
+    visibility: hidden; min-width: 250px; background: #333; color: #fff;
+    text-align: center; border-radius: 8px; padding: 16px; position: fixed;
+    z-index: 6000; left: 50%; bottom: 30px; transform: translateX(-50%);
+}
+#toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+/* SLIDER RESTORED */
+.slider { margin-top: 140px; position: relative; width: 95%; max-width: 500px; margin-left: auto; margin-right: auto; overflow: hidden; border-radius: 12px; height:330px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.images { display: flex; transition: 0.5s ease-in-out; height: 100%; }
+.images img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+
+/* MENU & HOVER */
+.dropbtn { 
+    position: fixed; top: 125px; left: 10px; height:50px; width:85px; z-index: 2000; 
+    cursor:pointer; background:#fff; border: 1px solid #ff7200; border-radius:8px; font-weight:bold; transition: 0.3s;
+}
+.dropbtn:hover { background: #ff7200; color: #fff; }
+.dropcontent { 
+    position: fixed; left: -300px; top: 0; width: 260px; height: 100%; 
+    background:#fff; transition: 0.4s ease; z-index:1500; padding-top: 180px; box-shadow: 2px 0 10px rgba(0,0,0,0.3); 
+}
+.dropcontent.show { left: 0; }
+.dropcontent a { display:block; padding:15px 20px; color:#000; text-decoration:none; font-weight: bold; border-bottom: 1px solid #eee; transition: 0.3s; }
+.dropcontent a:hover { background:#4a4a4a; color:#fff; }
+
+/* SECTIONS */
+.section { display: none; margin-top: 20px; padding: 20px; text-align: center; min-height: 80vh; padding-bottom: 100px; }
+.active { display: block !important; }
+#aboutSection{
+    margin-top:10cap;
+}
+
+/* ROOM GRID (RED STATUS) */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px;background: #28a745; }
+.room-card { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; transition: 0.3s; }
+.room-card.booked { background: #ffcccc; border-color: #ff4d4d; }
+.book-btn { background: #28a745; color: white; border: none; padding: 8px; border-radius: 4px; width: 100%; cursor: pointer; margin-top: 5px; font-weight: bold; }
+
+/* CONTACT CARDS */
+.contact-card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 5px solid cornflowerblue; max-width: 450px; margin: auto; }
+.social-links img { width: 35px; height: 35px; margin: 0 10px; }
+.admin-img { width: 12cap; height: 16cap; border-radius: 10px; }
+.Landlord-img { width: 10cap; height: 10cap; border-radius: 50%; }
+.Caretaker img { width: 10ap; height: 10cap; border-radius: 10px; }
+
+/* RENT STYLING */
+.pay-btn { background: #28a745; color: white; border: none; padding: 15px; border-radius: 30px; font-weight: bold; width: 100%; max-width: 250px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 15px auto; }
+
+/* NEWS & GALLERY IMAGES */
+.news-post img, .gallery-item img { width: 100%; border-radius: 8px; margin-top: 10px; }
+
+/* CHAT BOX */
+#chat-container { position: fixed; bottom: 20px; right: 20px; width: 280px; z-index: 4000; }
+#chat-box { background: white; border-radius: 10px 10px 0 0; box-shadow: 0 0 10px rgba(0,0,0,0.2); display: none; flex-direction: column; height: 300px; }
+#chat-header { background: cornflowerblue; color: white; padding: 10px; border-radius: 10px 10px 0 0; cursor: pointer; font-weight: bold; }
+
+/* FORMS */
+.form-box { display:none; position: fixed; top:120px; left:50%; transform: translateX(-50%); width:280px; padding:20px; border-radius:10px; background:#444; color:#fff; z-index: 4500; }
+
+@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+@keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div class="header">
+    <div class="logo">Ceddah Students Home</div>
+    <div style="display: flex; gap: 10px;">
+        <a href="#" onclick="toggleBox('loginBox')" style="color:white; text-decoration:none; font-weight:bold;">Login</a>
+        <a href="#" onclick="toggleBox('regBox')" style="color:white; background:rgba(0,0,0,0.2); padding:5px 10px; border-radius:5px; text-decoration:none; font-weight:bold;">Join</a>
+    </div>
+</div>
+
+<button class="dropbtn" id="menuBtn">☰ Menu</button>
+<div id="menulist" class="dropcontent">
+    <a href="#" onclick="showSection('homeSection')">Home</a>
+    <a href="#" onclick="showSection('aboutSection')">About</a>
+    <a href="#" onclick="showSection('newsSection')">News Feed</a>
+    <a href="#" onclick="showSection('gallerySection')">Plot Gallery</a>
+    <a href="#" onclick="showSection('rentSection')">Rent & Payments</a>
+    <a href="#" onclick="showSection('housesSection')">Rooms/Houses</a>
+    <a href="#" onclick="showSection('contactSection')">Contact & Location</a>
+    <p style="padding-left:20px; color:blue; font-weight:bold;">© AmazingDenis</p>
+</div>
+
+<div id="homeSection" class="section active">
+    <div class="slider">
+        <div class="images" id="imageTrack">
+            <img src="IMG_20260112_175337_HDR.jpg">
+            <img src="ceda.png">
+            <img src="IMG_20260111_163357_HDR.jpg">
+        </div>
+    </div>
+    <h2 style="color:#ff7200; margin-top:20px;">Ceddah Students Home</h2>
+    <p>Hostels with Comfort and Security in Bungoma-tutii.</p>
+</div>
+
+<div id="aboutSection" class="section">
+   <h2 style="color:#f37209; margin-top:24px;">Welcome to Ceddah Students Home</h2>
+    <p>Hostels with Comfort and Security in Bungoma-tutii. <br>We are adjacent to AP </p>
+</div>
+<div id="newsSection" class="section">
+    <h2>Post Plot News</h2>
+    <div style="background:white; padding:15px; border-radius:10px; max-width:500px; margin:auto;">
+        <input type="text" id="nT" placeholder="Post Title" style="width:90%; padding:10px; margin-bottom:10px;">
+        <textarea id="nC" placeholder="What's happening?" style="width:90%; padding:10px; height:60px;"></textarea>
+        <input type="file" id="nI" accept="image/*" style="margin-top:10px; font-size:12px;">
+        <button onclick="postNews()" style="width:100%; padding:10px; background:cornflowerblue; color:white; border:none; margin-top:10px; border-radius:5px; font-weight:bold;">Post Now</button>
+    </div>
+    <div id="newsFeed" style="margin-top:20px;"></div>
+</div>
+
+<div id="rentSection" class="section">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/M-PESA_LOGO-01.svg" width="120">
+    <h2>Rent & Payments</h2>
+    <p>LIPA NA M-PESA Till: <b style="color:green; font-size:26px;">4575448</b></p>
+    <button class="pay-btn" onclick="simulatePay()">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968303.png" width="20"> Pay Now
+    </button>
+    <div style="margin-top:20px;">
+        <textarea id="rMsg" placeholder="Paste M-Pesa Message here..." style="width:90%; height:80px; padding:10px; border-radius:8px;"></textarea><br>
+        <button onclick="verifyRent()" style="background:orange; color:white; border:none; padding:12px 25px; border-radius:5px; margin-top:10px; font-weight:bold;">Verify Payment</button>
+    </div>
+</div>
+
+<div id="gallerySection" class="section">
+    <h2>Plot Gallery</h2>
+    <input type="file" id="gInput" accept="image/*" onchange="uploadGal()">
+    <div id="galFeed" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;">
+        <img src="ceda.png" style="width:90%; border-radius:8px;">
+        <img src="IMG_20260111_163357_HDR.jpg" style="width:100%; border-radius:8px;">
+    </div>
+</div>
+
+<div id="contactSection" class="section">
+    <h2>Management</h2>
+    <div class="contact-card">
+        <h3>Admin (Denis)</h3>
+        <img src="Snapchat-1599580345.jpg" class="admin-img">
+        <div class="social-links">
+           <a href="https://www.facebook.com/565614389972836/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="25"> Facebook</a>
+            <a href="https://wa.me/254726534460"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">Whatspp</a>
+            <a href="tel:+254726534460"><img src="https://cdn-icons-png.flaticon.com/512/15/15985.png">Call</a>
+        </div>
+    
+
+        <h3>Landlord</h3>
+        <div class="Landlord"><img src="profile.png" alt="#"></div>
+    <div class="social-links" style="display:inline-block; text-align:left;">
+        
+        <a href="https://wa.me/254727145442" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="25"> WhatsApp</a>
+        
+        <a href="tel:+254727145442"><img src="https://cdn-icons-png.flaticon.com/512/15/15985.png" width="25"> Call Landlord</a>
+    </div>
+    
+    
+    <h3>Caretaker</h3>
+        <div class="Caretaker"><img src="images (2).jpeg" alt="#"></div>
+    <div class="social-links" style="display:inline-block; text-align:left;">
+        <a href="https://www.facebook.com/paul.onyaji" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" width="25"> Facebook</a>
+        <a href="https://wa.me/254718848472" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="25"> WhatsApp</a>
+        
+        <a href="tel:+254718848472"><img src="https://cdn-icons-png.flaticon.com/512/15/15985.png" width="25"> Call Caretaker</a>
+    </div>
+    <div style="background:white; padding:10px; border-radius:15px; margin-top:20px;">
+     </div>
+    </div>
+      <h3>Location</h3>
+        <iframe src="http://googleusercontent.com/maps.google.com/9" style="width:100%; height:200px; border:none; border-radius:10px;"></iframe>
+   
+
+
+<div id="housesSection" class="section">
+    <h2>Available Rooms</h2>
+    <div class="grid" id="roomsGrid"></div>
+</div>
+
+<div id="regBox" class="form-box">
+    <h3>Join Ceddah</h3>
+    <input type="text" placeholder="Email" style="width:90%; padding:10px; margin-bottom:10px;">
+    <button onclick="toggleBox('regBox')" style="width:100%; padding:10px;">Register</button>
+</div>
+<div id="loginBox" class="form-box">
+    <h3>User Login</h3>
+    <input type="text" placeholder="Email" style="width:90%; padding:10px; margin-bottom:10px;">
+    <button onclick="toggleBox('loginBox')" style="width:100%; padding:10px;">Login</button>
+</div>
+
+<div id="chat-container">
+    <div id="chat-header" onclick="toggleChat()">💬 Online Chat</div>
+    <div id="chat-box">
+        <div id="chat-messages" style="flex:1; padding:10px; overflow-y:auto; font-size:12px;"></div>
+        <div style="display:flex; border-top:1px solid #eee;">
+            <input type="text" id="cInput" style="flex:1; border:none; padding:10px;">
+            <button onclick="sendC()" style="background:cornflowerblue; color:white; border:none; padding:10px;">Send</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+// NOTIFICATIONS
+function showToast(m) { var x = document.getElementById("toast"); x.innerText = m; x.className = "show"; setTimeout(()=>x.className="", 3000); }
+
+// AUTO SLIDER (FIXED)
+let sliderIdx = 0;
+function runSlider() {
+    const track = document.getElementById('imageTrack');
+    if(!track) return;
+    sliderIdx = (sliderIdx + 1) % 3;
+    track.style.transform = `translateX(-${sliderIdx * 100}%)`;
+}
+setInterval(runSlider, 4000);
+
+// SECTION NAVIGATION
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.getElementById('menulist').classList.remove('show');
+    window.scrollTo(0,0);
+}
+document.getElementById('menuBtn').onclick = (e) => {
+    e.stopPropagation();
+    document.getElementById('menulist').classList.toggle('show');
+};
+function toggleBox(id) { let b = document.getElementById(id); b.style.display = (b.style.display==='block')?'none':'block'; }
+
+// NEWS
+function postNews() {
+    const t = document.getElementById('nT').value;
+    const c = document.getElementById('nC').value;
+    const i = document.getElementById('nI').files[0];
+    if(!t) return showToast("Add a title!");
+    const id = Date.now();
+    if(i) {
+        const r = new FileReader();
+        r.onload = (e) => renderN(id, t, c, `<img src="${e.target.result}">`);
+        r.readAsDataURL(i);
+    } else renderN(id, t, c, "");
+}
+function renderN(id, t, c, img) {
+    const html = `<div class="news-post" id="${id}" style="background:white; padding:15px; border-radius:10px; text-align:left; margin-bottom:15px; border-left:5px solid cornflowerblue; position:relative;">
+        <button onclick="this.parentElement.remove(); showToast('Post Removed!')" style="position:absolute; right:10px; top:10px; background:red; color:white; border:none; border-radius:3px;">X</button>
+        <h4>${t}</h4><p>${c}</p>${img}</div>`;
+    document.getElementById('newsFeed').innerHTML = html + document.getElementById('newsFeed').innerHTML;
+    showToast("News Posted! 📣");
+}
+
+// RENT
+function simulatePay() { showToast("Launching M-Pesa... 💳"); window.location.href="tel:*334#"; }
+function verifyRent() { if(!document.getElementById('rMsg').value) return showToast("Paste Message!"); showToast("Verification Sent! ✅"); }
+
+// CHAT
+function toggleChat() { let b = document.getElementById('chat-box'); b.style.display = (b.style.display==='flex')?'none':'flex'; }
+function sendC() {
+    const i = document.getElementById('cInput');
+    if(!i.value) return;
+    document.getElementById('chat-messages').innerHTML += `<div style="text-align:right; margin-bottom:5px;"><span style="background:cornflowerblue; color:white; padding:5px 8px; border-radius:10px;">${i.value}</span></div>`;
+    i.value = "";
+}
+
+// HOUSES
+function loadRooms() {
+    const g = document.getElementById('roomsGrid');
+    ['L','R','M'].forEach(s => {
+        for(let i=1; i<=6; i++) {
+            let rId = s+i;
+            g.innerHTML += `<div class="room-card" id="card-${rId}"><b>${rId}</b><br><button class="book-btn" onclick="book('${rId}')">Book</button></div>`;
+        }
+    });
+}
+function book(r) {
+    document.getElementById('card-'+r).classList.add('booked');
+    const btn = document.getElementById('card-'+r).querySelector('button');
+    btn.innerText="Occupied"; btn.style.background="#888"; btn.onclick=null;
+    showToast("Room " + r + " Booked! 🏠");
+}
+
+window.onload = loadRooms;
+</script>
+</body>
+</html>
